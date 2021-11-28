@@ -1,15 +1,13 @@
 #!/usr/bin/python
 import sys, struct, serial
+from pylsl import StreamInfo, StreamOutlet
 
 
 def wait_for_ack():
    ddata = ""
    ack = struct.pack('B', 0xff)
    while ddata != ack:
-      ddata = ser.read(1)
-      print('her', ddata)
-      print( "0x%02x" % ord(ddata[0]))
-	  
+      ddata = ser.read(1)	  
    return
 
 #print(sys.argv.index.__getattribute__)
@@ -43,13 +41,23 @@ else:
    sampling_freq = 50
    clock_wait = (2 << 14) / sampling_freq
 
-   ser.write(struct.pack('<BH', 0x05, clock_wait))
+   ser.write(struct.pack('<BH', 0x05, int(clock_wait)))
    wait_for_ack()
 
 # send start streaming command
    ser.write(struct.pack('B', 0x07))
    wait_for_ack()
    print( "start command sending, done.")
+
+   # define lsl streams
+   # Defining stream info:
+   name = 'Shimmer_GSR'
+   ID = 'Shimmer_GSR'
+   channels = 2
+   sample_rate = 50
+   datatype = 'float32'
+   streamType = 'GSR'
+   print("Creating LSL stream for GSR. \nName: %s\nID: %s\n" %(name, ID))
 
 # read incoming data
    ddata = ""
@@ -60,16 +68,25 @@ else:
    try:
       while True:
          while numbytes < framesize:
-            ddata += ser.read(framesize)
+            ddata = ser.read(framesize)
             numbytes = len(ddata)
          
+         #print('ddata', ddata)
          data = ddata[0:framesize]
          ddata = ddata[framesize:]
          numbytes = len(ddata)
 
+         """ print('struckt size: ', str(struct.calcsize('P')))
+
+         for i in range(framesize):
+            print(data[i])
+            print(struct.unpack('P', data[i]))
+          """
+
          # read basic packet information
          (packettype) = struct.unpack('B', data[0:1])
          (timestamp0, timestamp1, timestamp2) = struct.unpack('BBB', data[1:4])
+         # print('packettype', packettype)
 
          # read packet payload
          (PPG_raw, GSR_raw) = struct.unpack('HH', data[4:framesize])
@@ -95,6 +112,19 @@ else:
          timestamp = timestamp0 + timestamp1*256 + timestamp2*65536
 
          print( "0x%02x\t\t%5d,\t%4d,\t%4d" % (packettype[0], timestamp, GSR_ohm, PPG_mv))
+         
+         info_gsr = StreamInfo(name, streamType, channels, sample_rate, datatype, ID)
+         #print(info_gsr)
+         chns = info_gsr.desc().append_child("channels")
+         #print('chns: ', chns)
+         for label in ["CH1", "CH"]:
+            ch = chns.append_child("channel")
+            ch.append_child_value("label", label)
+            
+         
+         outlet_gsr = StreamOutlet(info_gsr)
+         #print(outlet_gsr.do_push_chunk)
+
 
 
    except KeyboardInterrupt:
