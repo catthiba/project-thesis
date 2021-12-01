@@ -22,8 +22,14 @@ else:
     print ("Port open...") 
 try:
     inq_command = ser.write(struct.pack('B', 0x01))
-    inq_response = list(ser.read(10))
+    wait_for_ack()
+    inq_response = ser.read(10)
+    #putting list infront of a array of bytes converts the bytes into decimals 
+    inq_list = list(inq_response)
+    int_unpacked = struct.unpack(10*'B', inq_response)
     print(inq_response)
+    print(inq_list)
+    print(int_unpacked)
 
     #get the daughter card ID byte (SR number)
     print("Requesting Daughter Card ID and Revision number...")
