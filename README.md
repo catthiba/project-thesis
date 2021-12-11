@@ -93,9 +93,13 @@ pip install pyserial
 
 ### LabRecorder
 
-Install LabRecorder from the [release page](https://github.com/labstreaminglayer/App-LabRecorder/releases). The software is available for Windows, Linux and OSX.
+The program can be downloaded through LSL's own [GitHub repository](https://github.com/labstreaminglayer/App-LabRecorder/releases). The program is cross-platform, supported by the popular operative system such as Windows, OSX, Android, and Linux. The dependencies of the program must be downloaded and installed if the program is running on Linux Ubuntu. 
 
 ## Usage
+
+LabRecorder has a user-friendly interface, making it easy to start the recording session. The interface consists of three sections. A Recording control section where the user can start and stop the recording. A Record from Streams section where all available device streams are displayed, and lastly a Saving to section, where the location of the file is displayed, in addition to configuration settings of the file. 
+
+If only specific streams are wanted they can be selected as needed. LabRecorder must be updated if a device is turned on after initiating the program. When the setup is ready, the user can start recording the measurements.
 
 First you have to connect to the Shimmer sensor units. This is done differently on Windows and Linux.
 
