@@ -141,7 +141,7 @@ When connecting to the sensors for the first time a window will pop up on the sc
 
 ### Windows
 
-Connect to the Shimmer sensor units through the Bluetooth UI. This is found under bluetooth setting. Click on "Add Bluetooth or other device", then on "Bluetooth". Find the shimmer device you want to connect and doubble click on it. It will ask you for a pin, type in the pin "1234" => connect => done
+Connect to the Shimmer sensor units through the Bluetooth UI. This is found under bluetooth setting. Click on "Add Bluetooth or other device", then on "Bluetooth". Find the shimmer device you want to connect and doubble click on it. It will ask you for a pin, type in the pin "1234", click "connect" => "done".
 
 To check which comport it is using the device is using, click on "More Bluetooth options" => "Com Ports". Here you will see overview of COM ports, the direction and name of device. If the device do not have an outgoing COM port already you have to add on by clicking "Add...", check of for outgoing, find the device in the dropdown list and click "Ok". Note which COM port the device have, because when you are running the scripts you need to know which comport to use.
 
@@ -150,23 +150,24 @@ To check which comport it is using the device is using, click on "More Bluetooth
 1. Open LabRecorder.
 2. To conduct the experiment with the Shimmer sensors and LabRecorder you have to run the scripts ECG_to_LSL.py and GSR_to_LSL.py in seperate terminals/command prompts. 
 
-  Linux:
+    Linux:
+
+      ```
+      sudo python3 ECG_to_LSL.py /dev/rfcomm0
+      ```
+      
+      ```
+      sudo python3 GSR_to_LSL.py /dev/rfcomm0
+      ```
+    Windows:
 
     ```
-    sudo python3 ECG_to_LSL.py /dev/rfcomm0
+    python ECG_to_LSL.py <COMPORT>
     ```
-    ```
-    sudo python3 GSR_to_LSL.py /dev/rfcomm0
-    ```
-  Windows:
 
-   ```
-   python ECG_to_LSL.py <COMPORT>
-   ```
-
-   ```
-   python GSR_to_LSL.py <COMPORT>
-   ```
+    ```
+    python GSR_to_LSL.py <COMPORT>
+    ```
 
 <!-- ... RunExperiment.py. The sensors are now available to the LSL network.
    Linux:
@@ -186,6 +187,31 @@ To check which comport it is using the device is using, click on "More Bluetooth
 5. Stop experiment. The data will be saved to an xdf file.
 6. View the data by running xdf.py, before running the script, it have to be modifed to have the correct file path. 
 
+    ```
+    data, header = pyxdf.load_xdf('file_path')
+    ```
+The xdf.py scripts require some dependencies to be installed.
+
+Install Pyxdf
+
   ```
-  data, header = pyxdf.load_xdf('file_path')
+  conda install -c conda-forge oyxdf
+  ```
+
+    or:
+
+  ```
+  pip install pyxdf
+  ```
+
+Install matplotlib
+
+  ```
+  conda install matplotlib
+  ```
+
+    or:
+
+  ```
+  pip install -U matplotlib
   ```
