@@ -190,28 +190,29 @@ To check which comport it is using the device is using, click on "More Bluetooth
     ```
     data, header = pyxdf.load_xdf('file_path')
     ```
-The xdf.py scripts require some dependencies to be installed.
+    
+    The xdf.py scripts require some dependencies to be installed.
 
-Install Pyxdf
+    Install Pyxdf
 
-  ```
-  conda install -c conda-forge oyxdf
-  ```
+      ```
+      conda install -c conda-forge oyxdf
+      ```
 
-    or:
+        or:
 
-  ```
-  pip install pyxdf
-  ```
+      ```
+      pip install pyxdf
+      ```
 
-Install matplotlib
+    Install matplotlib
 
-  ```
-  conda install matplotlib
-  ```
+      ```
+      conda install matplotlib
+      ```
 
-    or:
+        or:
 
-  ```
-  pip install -U matplotlib
-  ```
+      ```
+      pip install -U matplotlib
+      ```
