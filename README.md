@@ -4,7 +4,7 @@ This repository is part of our prosject thesis, where the goal is to connect Shi
 
 In our research to decode the Shimmer units, we have copied and played around with the scripts from ShimmerReserch's GitHub repository for SHimmer3 units. The scripts can be found [here](https://github.com/ShimmerResearch/shimmer3/tree/master/LogAndStream/python_scripts).
 
-The scripts worth noticing are ShimmmerCommands, GSR_to_LSL.py, and EEG_to_LSL.py. Togheter these scripts creates an output stream which is collected by the LSL network.
+The scripts worth noticing are ShimmmerCommands, GSR_to_LSL.py, and ECG_to_LSL.py. Togheter these scripts creates an output stream which is collected by the LSL network.
 
 ## Table of content
 
@@ -25,7 +25,7 @@ It is good practice to use virtual environments, in order to have control of the
 
 ### Conda
 
-If you dont have Anaconda already installed, you can follow [the Windows guide](https://www.datacamp.com/community/tutorials/installing-anaconda-windows) for installation. Or if you have linux you can follw [the Linux guide](https://www.datacamp.com/community/tutorials/installing-anaconda-windows).
+If you dont have Anaconda already installed, you can follow [the Windows guide](https://www.datacamp.com/community/tutorials/installing-anaconda-windows) for installation. Or if you have linux you can follw [the Linux guide](https://www.datacamp.com/community/tutorials/installing-anaconda-windows). Open your terminal or Anaconda prompt and follow the steps:
 
 Create and activate Anaconda environment:
 
@@ -48,7 +48,7 @@ source conda activate your_environment
 Install LSL:
 
 ```
-conda install pylsl
+conda install -c tstenner pylsl
 ```
 
 Install Serial Port:
@@ -56,6 +56,8 @@ Install Serial Port:
 ```
 conda install pyserial
 ```
+
+Type y when conda asks you to proceed
 
 ### PIP
 
@@ -131,14 +133,42 @@ Connect to the Shimmer with:
 sudo rfcomm connect /dev/rfcomm0 <MAC-adress> 1 &
 ```
 
+When connecting to the sensors for the first time a window will pop up on the screen and ask you to type in a pin code. This pin code is:
+
+```
+1234
+```
+
 ### Windows
 
-Connect to the Shimmer sensor units through the Bluetooth UI. Check the advanced settings and see which comport it is using. The comport should be in output-mode. When running the scripts you need to know which comport to use.
+Connect to the Shimmer sensor units through the Bluetooth UI. This is found under bluetooth setting. Click on "Add Bluetooth or other device", then on "Bluetooth". Find the shimmer device you want to connect and doubble click on it. It will ask you for a pin, type in the pin "1234" => connect => done
+
+To check which comport it is using the device is using, click on "More Bluetooth options" => "Com Ports". Here you will see overview of COM ports, the direction and name of device. If the device do not have an outgoing COM port already you have to add on by clicking "Add...", check of for outgoing, find the device in the dropdown list and click "Ok". Note which COM port the device have, because when you are running the scripts you need to know which comport to use.
 
 ### Run Experiment
 
 1. Open LabRecorder.
-2. To conduct the experiment with the Shimmer sensors and LabRecorder you have to run RunExperiment.py. The sensors are now available to the LSL network.
+2. To conduct the experiment with the Shimmer sensors and LabRecorder you have to run the scripts ECG_to_LSL.py and GSR_to_LSL.py in seperate terminals/command prompts. 
+
+  Linux:
+
+    ```
+    sudo python3 ECG_to_LSL.py /dev/rfcomm0
+    ```
+    ```
+    sudo python3 GSR_to_LSL.py /dev/rfcomm0
+    ```
+  Windows:
+
+   ```
+   python ECG_to_LSL.py <COMPORT>
+   ```
+
+   ```
+   python GSR_to_LSL.py <COMPORT>
+   ```
+
+<!-- ... RunExperiment.py. The sensors are now available to the LSL network.
    Linux:
 
    ```
@@ -149,9 +179,13 @@ Connect to the Shimmer sensor units through the Bluetooth UI. Check the advanced
 
    ```
    python RunExperiment.py <COMPORT>
-   ```
+   ```-->
 
 3. Update LabRecorder and select the sensors you want.
 4. Start experiment. Both RunExperiment.py and LabRecorder must run simultaniously in order to collect data.
 5. Stop experiment. The data will be saved to an xdf file.
-6. View the data by running xdf.py
+6. View the data by running xdf.py, before running the script, it have to be modifed to have the correct file path. 
+
+  ```
+  data, header = pyxdf.load_xdf('file_path')
+  ```
