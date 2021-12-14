@@ -4,7 +4,7 @@ This repository is part of our prosject thesis, where the goal is to connect Shi
 
 In our research to decode the Shimmer units, we have copied and played around with the scripts from ShimmerReserch's GitHub repository for SHimmer3 units. The scripts can be found [here](https://github.com/ShimmerResearch/shimmer3/tree/master/LogAndStream/python_scripts).
 
-The scripts worth noticing are ShimmmerCommands, GSR_to_LSL.py, and ECG_to_LSL.py. Togheter these scripts creates an output stream which is collected by the LSL network.
+The scripts worth noticing are ShimmmerCommands, GSR_to_LSL.py, and ECG_to_LSL.py in the src folder. Togheter these scripts creates an output stream which is collected by the LSL network.
 
 ## Table of content
 
@@ -190,7 +190,7 @@ To check which comport it is using the device is using, click on "More Bluetooth
     ```
     data, header = pyxdf.load_xdf('file_path')
     ```
-    
+
     The xdf.py scripts require some dependencies to be installed.
 
     Install Pyxdf
