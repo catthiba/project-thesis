@@ -3,15 +3,17 @@ import pyxdf
 import matplotlib.pyplot as plt
 import numpy as np
 
-data, header = pyxdf.load_xdf('test_GSR_ECG.xdf')
+data, header = pyxdf.load_xdf('../experiment_setup.xdf')
 
 for idx, stream in enumerate(data): 
     name = stream["info"]["name"][0]
     print(idx, name)
 
+
 for stream in data:
     y = np.array(stream['time_series'])
-
+    name = stream["info"]["name"][0]
+    print(name)
     if isinstance(y, list):
         print('her isinstance')
 
@@ -26,5 +28,8 @@ for stream in data:
         plt.plot(np.array(stream['time_stamps']), y)
     else:
         raise RuntimeError('Unknown stream format')
-
-plt.show()
+    
+    plt.title(name)
+    plt.xlabel("Time stamps")
+    plt.savefig('%s.png' % name )
+    plt.show()
