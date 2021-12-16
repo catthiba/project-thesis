@@ -10,6 +10,7 @@ def wait_for_ack():
    ack = struct.pack('B', 0xff)
    while ddata != ack:
       ddata = ser.read(1)
+   print(ddata)
    return
 
 def bmp280_calib(uTemp, uPress):

@@ -22,8 +22,14 @@ else:
     print ("Port open...") 
 try:
     inq_command = ser.write(struct.pack('B', 0x01))
-    inq_response = list(ser.read(10))
+    wait_for_ack()
+    inq_response = ser.read(10)
+    #putting list infront of a array of bytes converts the bytes into decimals 
+    inq_list = list(inq_response)
+    int_unpacked = struct.unpack(10*'B', inq_response)
     print(inq_response)
+    print(inq_list)
+    print(int_unpacked)
 
     #get the daughter card ID byte (SR number)
     print("Requesting Daughter Card ID and Revision number...")
@@ -57,9 +63,22 @@ try:
     #wait for respone
     wait_for_ack()
     #SAMPLING_RATE_RESPONSE recieves sampling rate 
-    samplerate = list(struct.unpack(3*'B',ser.read(3)))
+    samplerate = list(struct.unpack('BBB',ser.read(3)))
     print(samplerate)
     #[4, 64, 0] (ecg) 4 is which command/packet it is while 64, 0 are the samplerate values
+
+    #send the set sensors command
+    ser.write(struct.pack('BBBB', 0x08, 0x18, 0x00, 0x00))  #exg1 and exg2
+    wait_for_ack()
+    print ("Sensor Enabling done...")
+
+    inq_command = ser.write(struct.pack('B', 0x01))
+    wait_for_ack()
+    #ville ikke lese mer en 15 
+    #reading the inquiry response 
+    inq_response = list(struct.unpack(15*'B',ser.read(15)))
+    print("inq_respone: "+ inq_response)
+
 except KeyboardInterrupt:
     #send stop streaming command
     ser.write(struct.pack('B', 0x20))

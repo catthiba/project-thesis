@@ -53,11 +53,23 @@ else:
    # Defining stream info:
    name = 'Shimmer_GSR'
    ID = 'Shimmer_GSR'
-   channels = 2
+   channels = 1
    sample_rate = 50
    datatype = 'float32'
    streamType = 'GSR'
    print("Creating LSL stream for GSR. \nName: %s\nID: %s\n" %(name, ID))
+
+   info_gsr = StreamInfo(name, streamType, channels, sample_rate, datatype, ID)
+   #print(info_gsr)
+   chns = info_gsr.desc().append_child("channels")
+   #print('chns: ', chns)
+   for label in ["CH1", "CH"]:
+      ch = chns.append_child("channel")
+      ch.append_child_value("label", label)
+      
+   
+   outlet_gsr = StreamOutlet(info_gsr)
+   #print(outlet_gsr.do_push_chunk)
 
 # read incoming data
    ddata = ""
@@ -113,17 +125,11 @@ else:
 
          print( "0x%02x\t\t%5d,\t%4d,\t%4d" % (packettype[0], timestamp, GSR_ohm, PPG_mv))
          
-         info_gsr = StreamInfo(name, streamType, channels, sample_rate, datatype, ID)
-         #print(info_gsr)
-         chns = info_gsr.desc().append_child("channels")
-         #print('chns: ', chns)
-         for label in ["CH1", "CH"]:
-            ch = chns.append_child("channel")
-            ch.append_child_value("label", label)
-            
-         
-         outlet_gsr = StreamOutlet(info_gsr)
-         #print(outlet_gsr.do_push_chunk)
+         gsr_data = GSR_ohm
+         print('gsr_data: ', gsr_data)
+         gsr_chunk = []
+         gsr_chunk.append(gsr_data)
+         outlet_gsr.push_chunk(gsr_chunk)
 
 
 
