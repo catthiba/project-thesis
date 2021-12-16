@@ -31,5 +31,5 @@ for stream in data:
     
     plt.title(name)
     plt.xlabel("Time stamps")
-    plt.savefig('%s.png' % name )
+    plt.savefig('../Images/%s.png' % name )
     plt.show()
