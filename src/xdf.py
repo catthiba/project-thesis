@@ -3,7 +3,7 @@ import pyxdf
 import matplotlib.pyplot as plt
 import numpy as np
 
-data, header = pyxdf.load_xdf('../experiment_setup.xdf')
+data, header = pyxdf.load_xdf('../SampleFiles/GSR_test.xdf')
 
 for idx, stream in enumerate(data): 
     name = stream["info"]["name"][0]
