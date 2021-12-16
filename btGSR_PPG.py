@@ -79,7 +79,7 @@ else:
             ddata = ser.read(framesize)
             numbytes = len(ddata)
          
-         print('ddata', ddata)
+         #print('ddata', ddata)
          data = ddata[0:framesize]
          ddata = ddata[framesize:]
          numbytes = len(ddata)
@@ -120,7 +120,7 @@ else:
          timestamp = timestamp0 + timestamp1*256 + timestamp2*65536
 
          print ("0x%02x\t\t%5d,\t%4d,\t%4d" % (packettype[0], timestamp, GSR_ohm, PPG_mv))
-         print('data', data)
+         #print('data', data)
 
          file.write("0x%02x\t\t%5d,\t%4d,\t%4d\n" % (packettype[0], timestamp, GSR_ohm, PPG_mv))
          #output: b'\x00\xf7\x98Z\xbc\x04\xbc\xc2'
