@@ -7,8 +7,13 @@ In our research to decode the Shimmer units, we have copied and played around wi
 The scripts worth noticing are ShimmmerCommands, GSR_to_LSL.py, and ECG_to_LSL.py in the src folder. Togheter these scripts creates an output stream which is collected by the LSL network.
 
 ## Table of content
-
+- [Repository Structure](#repository-structure)
+  - [Images](#images)
+  - [Sample Files](#sample-files)
+  - [Shimmer Scripts](#shimmer-scripts)
+  - [src](#src)
 - [Installation](#installation)
+  - [Clone Repository](#clone-repository)
   - [Conda](#conda)
   - [PIP](#pip)
   - [LabRecorder](#labrecorder)
@@ -16,22 +21,41 @@ The scripts worth noticing are ShimmmerCommands, GSR_to_LSL.py, and ECG_to_LSL.p
   - [Linux](#linux)
   - [Windows](#windows)
   - [Run Experiment](#run-experiment)
+## Repository Structure
+### Images 
+This folder contains images taken from test, plots from experiments, and from the terminal while exploring how the scripts functions. 
+
+### Sample Files 
+This folder contains xdf files, obtained from tests performed in LabRecorder.
+
+### Shimmer Scripts
+This folder contains scripts from Shimmer Research, used for testing. The scripts are modified with own comments. 
+
+### src
+This folder contains the files needed to conduct the experiment. The scripts ShimmerCommands.py, ECG_to_LSL.py and GSR_to_LSL.py are the one developed during this project. The folder also contains the scripts stream_EEG_chunk_LSL.py and xdf.py that is not our own. 
 
 ## Installation
-
 In order to run this repository, and use LSL follow these steps. The setup is tested on both linux and windows operative system.
 
-It is good practice to use virtual environments, in order to have control of the installed packages and libraries. You can eighter use Anaconda and the conda environment, or install virtualenvironment. Both guides are given below.
+It is good practice to use virtual environments, in order to have control of the installed packages and libraries. You can eighter use Anaconda and the conda environment, or install virtualenvironment. Both guides are given below, one only need to follow the instructions for Conda or PIP.
+
+### Clone Repository 
+In terminal of preference, go to directory you want the repository to be added. To clone the repository run the command:
+```
+git clone https://github.com/catthiba/project-thesis.git
+```
+Direct into the folder project-thesis, and then to the folder src. 
 
 ### Conda
 
 If you dont have Anaconda already installed, you can follow [the Windows guide](https://www.datacamp.com/community/tutorials/installing-anaconda-windows) for installation. Or if you have linux you can follw [the Linux guide](https://www.datacamp.com/community/tutorials/installing-anaconda-windows). Open your terminal or Anaconda prompt and follow the steps:
 
-Create and activate Anaconda environment:
+Create and activate Anaconda environment, your_environment should be replaced by desired name for the environment:
 
 ```
 conda create --name your_environment
 ```
+Type y when conda asks you to proceed
 
 Windows activation:
 
@@ -44,11 +68,17 @@ Linux activation:
 ```
 source conda activate your_environment
 ```
+#### Required libraries
 
 Install LSL:
 
 ```
 conda install -c tstenner pylsl
+```
+and,
+
+```
+conda install -c conda-forge liblsl
 ```
 
 Install Serial Port:
@@ -56,8 +86,6 @@ Install Serial Port:
 ```
 conda install pyserial
 ```
-
-Type y when conda asks you to proceed
 
 ### PIP
 
@@ -141,14 +169,18 @@ When connecting to the sensors for the first time a window will pop up on the sc
 
 ### Windows
 
-Connect to the Shimmer sensor units through the Bluetooth UI. This is found under bluetooth setting. Click on "Add Bluetooth or other device", then on "Bluetooth". Find the shimmer device you want to connect and doubble click on it. It will ask you for a pin, type in the pin "1234", click "connect" => "done".
+Connect to the Shimmer sensor units through the Bluetooth UI that can be found either by clicking on the Blutetooth symbol in the windows task bar and click on open settings, or by searching for Bluetooth settings in the search field. Click on "Add Bluetooth or other device", then on "Bluetooth". Find the shimmer device you want to connect and doubble click on it. On the back of the Shimmer3 device it has an id, the name of the device will be "Shimmer3-id". It will ask you for a pin, type in the pin "1234", click "connect" => "done".
 
-To check which comport it is using the device is using, click on "More Bluetooth options" => "Com Ports". Here you will see overview of COM ports, the direction and name of device. If the device do not have an outgoing COM port already you have to add on by clicking "Add...", check of for outgoing, find the device in the dropdown list and click "Ok". Note which COM port the device have, because when you are running the scripts you need to know which comport to use.
+To check which comport it is using the device is using, click on "More Bluetooth options" => "Com Ports". Here you will see overview of COM ports, the direction and name of device. 
+
+If the device do not have an outgoing COM port already you have to add on by clicking "Add...", check of for outgoing, find the device in the dropdown list and click "Ok". 
+
+Note which outgoing COM port the device have, because when you are running the scripts you need to know which comport to use.
 
 ### Run Experiment
 
 1. Open LabRecorder.
-2. To conduct the experiment with the Shimmer sensors and LabRecorder you have to run the scripts ECG_to_LSL.py and GSR_to_LSL.py in seperate terminals/command prompts. 
+2. To conduct the experiment with the Shimmer sensors and LabRecorder you have to run the scripts ECG_to_LSL.py and GSR_to_LSL.py in seperate terminals/command prompts and the environment created earlier have to be activated. Ensure that you are in the right working directory, the src folder. 
 
     Linux:
 
@@ -159,15 +191,15 @@ To check which comport it is using the device is using, click on "More Bluetooth
       ```
       sudo python3 GSR_to_LSL.py /dev/rfcomm0
       ```
-    Windows:
+    Windows, use the corresponding outgoing COM ports to the devices:
 
-    ```
-    python ECG_to_LSL.py <COMPORT>
-    ```
+      ```
+      python ECG_to_LSL.py <COMPORT>
+      ```
 
-    ```
-    python GSR_to_LSL.py <COMPORT>
-    ```
+      ```
+      python GSR_to_LSL.py <COMPORT>
+      ```
 
 <!-- ... RunExperiment.py. The sensors are now available to the LSL network.
    Linux:
@@ -183,15 +215,14 @@ To check which comport it is using the device is using, click on "More Bluetooth
    ```-->
 
 3. Update LabRecorder and select the sensors you want.
-4. Start experiment. Both RunExperiment.py and LabRecorder must run simultaniously in order to collect data.
+4. Start experiment. Both the scripts for the ECG and GSR device, and LabRecorder must run simultaniously in order to collect data.
 5. Stop experiment. The data will be saved to an xdf file.
-6. View the data by running xdf.py, before running the script, it have to be modifed to have the correct file path. 
+6. View the data by running xdf.py, before running the script, it have to be modifed to have the correct file path. Open the script and change the line bellow with to the path where the file is saved.
 
     ```
     data, header = pyxdf.load_xdf('file_path')
     ```
-
-    The xdf.py scripts require some dependencies to be installed.
+7. The additional dependencies have to be installed: 
 
     Install Pyxdf
 
@@ -215,4 +246,16 @@ To check which comport it is using the device is using, click on "More Bluetooth
 
       ```
       pip install -U matplotlib
+      ```
+9. Run the xdf.py file:
+    Linux:
+
+      ```
+      sudo python3 xdf.py
+      ```
+
+    Windows:
+
+      ```
+      python xdf.py
       ```

@@ -184,7 +184,7 @@ class ECG_to_LSL:
     def ECG_setup(self):
         self.requestDaughterCard()
         self.setSensors()
-        self.setSamplingRateHz()
+        self.setSamplingRateHz(self.samplingFrequency)
         self.setConfigBytes()
         exgCalFactor = self.setCalFactor()
         self.configureChips()
