@@ -108,6 +108,7 @@ Linux activation:
 ```
 source your_environment/bin/activate
 ```
+#### Required libraries
 
 Install LSL
 
