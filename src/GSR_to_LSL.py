@@ -24,8 +24,8 @@ from ShimmerCommands import ShimmerCommands
 #------------------
 class GSR_to_LSL:
    # 2.1 Initialize contact with GSR sensor unit
-   def __init__(self):
-      self.ser = ShimmerCommands.serial_connect(self)
+   def __init__(self, comX):
+      self.ser = ShimmerCommands.serial_connect(self, comX)
 
    # 2.2 Define GSR setup
    def GSR_setup(self):

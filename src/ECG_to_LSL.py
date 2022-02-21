@@ -29,9 +29,9 @@ from ShimmerCommands import ShimmerCommands
 #------------------
 class ECG_to_LSL:
    # 2.1 Initialize ECG sensor
-    def __init__(self):
+    def __init__(self, comX):
         # 2.1.1 Initialize contact with ECG sensor unit
-        self.ser = ShimmerCommands.serial_connect(self)
+        self.ser = ShimmerCommands.serial_connect(self, comX)
 
         # 2.1.2 Set configuration parameters
         self.exgconfigGain = {	#decimal

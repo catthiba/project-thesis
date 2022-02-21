@@ -1,7 +1,7 @@
 # TABLE OF CONTENT  
 #------------------------------------------------------------
-# 1. Required modules
-# 2. ShimmerCommands
+# 1.  Required modules
+# 2.  ShimmerCommands
 # 2.1 Initialize class
 # 2.2 Function: conenct to sensor unit
 # 2.3 Function: wait for acknowledge respnse from sensor unit
@@ -18,11 +18,11 @@ import sys, struct, serial
 class ShimmerCommands:
 
     # 2.1 Initialize class
-    def __init__(self):
-        self.ser = self.serial_connect()
+    def __init__(self, comX):
+        self.ser = self.serial_connect(comX)
 
     # 2.2 Function: conenct to sensor unit
-    def serial_connect(self):
+    def serial_connect(self, comX):
         if len(sys.argv) < 2:
             print( "no device specified")
             print( "You need to specify the serial port of the device you wish to connect to")
@@ -31,7 +31,7 @@ class ShimmerCommands:
             print( "or")
             print( "   aAccel5Hz.py /dev/rfcomm0")
         else:
-            self.ser = serial.Serial(sys.argv[1], 115200)
+            self.ser = serial.Serial(comX, 115200)
             self.ser.flushInput()
             print( "port opening, done.")
         return self.ser
