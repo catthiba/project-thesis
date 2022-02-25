@@ -32,7 +32,6 @@ class ECG_to_LSL:
     def __init__(self, comX):
         # 2.1.1 Initialize contact with ECG sensor unit
         self.ser = ShimmerCommands.serial_connect(self, comX)
-
         # 2.1.2 Set configuration parameters
         self.exgconfigGain = {	#decimal
             'GAIN_1':  0x15, #21
@@ -86,6 +85,7 @@ class ECG_to_LSL:
 
         self.serNumber = 0
         self.srRev = 0
+        self.ECG_setup()
 
     # 2.2 Define ECG setup
 
@@ -254,6 +254,3 @@ class ECG_to_LSL:
         except: ShimmerCommands.stop_stream(self)
 
          
-
-ecg = ECG_to_LSL()
-ecg.ECG_setup()

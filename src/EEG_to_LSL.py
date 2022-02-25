@@ -24,7 +24,7 @@ class EEG_to_LSL:
     def __init__(self):
         BoardShim.enable_dev_board_logger()
         self.params = BrainFlowInputParams()
-        self.params.serial_port = 'COM3'
+        self.params.serial_port = '/dev/ttyUSB0'
 
     # 2.2 Define EEG setup
     def EEG_setup(self):
