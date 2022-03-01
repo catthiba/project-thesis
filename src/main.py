@@ -17,12 +17,15 @@ def main():
     print("Heiheihiei")
     comX = sys.argv[1]          
     comY = sys.argv[2]
+    comUSB = '/dev/tty2'
 
-    x = threading.Thread(target=ECG_to_LSL, args=(comY,))
-    y = threading.Thread(target=GSR_to_LSL, args=(comX, ))
+    gsr = threading.Thread(target=GSR_to_LSL, args=(comX, ))
+    ecg = threading.Thread(target=ECG_to_LSL, args=(comY,))
+    #eeg = threading.Thread(target=EEG_to_LSL, args=(comUSB,))
     
-    x.start()
-    y.start()
+    gsr.start()
+    ecg.start()
+    #eeg.start()
 
 
 
