@@ -21,10 +21,11 @@ from pylsl import StreamInfo, StreamOutlet
 #------------------
 class EEG_to_LSL:
     # 2.1 Initialize contact with EEG sensor unit
-    def __init__(self):
+    def __init__(self, comX):
         BoardShim.enable_dev_board_logger()
         self.params = BrainFlowInputParams()
-        self.params.serial_port = '/dev/tty2'
+        self.params.serial_port = comX
+        self.EEG_setup()
 
     # 2.2 Define EEG setup
     def EEG_setup(self):
@@ -92,5 +93,5 @@ class EEG_to_LSL:
                 auxchunk.append((aux_data[:,i]).tolist())
             outlet_aux.push_chunk(auxchunk)
 
-eeg = EEG_to_LSL()
-eeg.EEG_setup()
+#eeg = EEG_to_LSL()
+#eeg.EEG_setup()
