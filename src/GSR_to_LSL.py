@@ -111,8 +111,9 @@ class GSR_to_LSL:
             PPG_mv = PPG_raw * (3000.0/4095.0)
             timestamp = timestamp0 + timestamp1*256 + timestamp2*65536
 
-            print( "0x%02x\t\t%5d,\t%4d,\t%4d" % (packettype[0], timestamp, GSR_ohm, PPG_mv))
-            
+            #print( "0x%02x\t\t%5d,\t%4d,\t%4d" % (packettype[0], timestamp, GSR_ohm, PPG_mv))
+            #print("Sending GSR data...")
+
             # push data to LSL stream
             gsr_chunk = []
             gsr_chunk.append(GSR_ohm)

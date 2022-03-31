@@ -244,8 +244,10 @@ class ECG_to_LSL:
                 c2ch1 *= exgCalFactor
                 c2ch2 *= exgCalFactor
 
-                print ("0x%02x,\t\t%5d,\t0x%02x,\t\t%2.4f,%2.4f,\t\t%s0x%02x,\t\t%2.4f,%2.4f" % \
-                (packettype, timestamp, c1status, c1ch1, c1ch2, "\t" if c1ch1>0 else "", c2status, c2ch1, c2ch2))
+                #print ("0x%02x,\t\t%5d,\t0x%02x,\t\t%2.4f,%2.4f,\t\t%s0x%02x,\t\t%2.4f,%2.4f" % \
+                #(packettype, timestamp, c1status, c1ch1, c1ch2, "\t" if c1ch1>0 else "", c2status, c2ch1, c2ch2))
+                #print("Sending ECG data...")
+ 
 
                 ecg_data = [c1ch1, c1ch2, c2ch1, c2ch2]
                 ecg_chunk = []

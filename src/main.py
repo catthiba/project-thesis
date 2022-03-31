@@ -7,14 +7,8 @@ from GSR_to_LSL import GSR_to_LSL
 import sys
 
 
-def thread_function(name, sleep_time):
-    print(f"Thhread starting {name}")
-    time.sleep(random.randint(1, 50))
-    print(f"Thhread done lol {name}")
 
 def main():
-
-    print("Heiheihiei")
     comX = sys.argv[1]          
     comY = sys.argv[2]
     comUSB = 'Com3' #/dev/tty2'
@@ -30,5 +24,4 @@ def main():
 
 
 if __name__ == "__main__":
-    print("asd")
     main()
