@@ -1,3 +1,14 @@
+# TABLE OF CONTENT
+#-----------------------------------------------
+# 1     Required modules
+# 2     Main method
+# 2.1   Set comport to GSR, ECG, and EEG
+# 2.2   Enable concurrent streaming of data
+# 2.3   Start concurrent running of streams
+
+
+# 1 Required modules
+#--------------------
 import threading
 import time
 import random
@@ -7,16 +18,20 @@ from GSR_to_LSL import GSR_to_LSL
 import sys
 
 
-
+# 2 Main method
+#------------------
 def main():
-    comX = sys.argv[1]          
-    comY = sys.argv[2]
-    comUSB = 'Com3' #/dev/tty2'
+    # 2.1 Set comport to GSR, ECG, and EEG
+    comX = sys.argv[1]      # GSR 
+    comY = sys.argv[2]      # ECG
+    comUSB = 'Com3'         # EEG
 
+    # 2.2 Enable concurrent streaming of data
     gsr = threading.Thread(target=GSR_to_LSL, args=(comX, ))
     ecg = threading.Thread(target=ECG_to_LSL, args=(comY,))
     eeg = threading.Thread(target=EEG_to_LSL, args=(comUSB,))
     
+    # 2.3 Start concurrent running of streams
     gsr.start()
     ecg.start()
     eeg.start()
