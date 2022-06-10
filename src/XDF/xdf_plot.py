@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-fpath = '/home/cathrine/Documents/master/project-thesis/LabRecordings/sub-P001/ses-S001/eeg/martin_psychopy_short.xdf'
-
+fpath = '/Users/trollexperiment/Documents/cathrine/project-thesis/LabRecordings/sub-P001/ses-S001/eeg/ecg_test2.xdf'
 
 streams, header = pyxdf.load_xdf(fpath)
 
@@ -13,9 +12,7 @@ for idx, stream in enumerate(streams):
     name = stream["info"]["name"][0]
     print(idx, name)
 
-streams.pop(0)
-streams.pop(0)
-streams.pop(4)
+
 
 
 for stream in streams:

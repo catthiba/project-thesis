@@ -12,9 +12,10 @@ import pandas as pd
 # This can be done iteratively by looping through files in  folder with e.g. glob
 #fpath = '/home/cathrine/Documents/master/project-thesis/LabRecordings/sub-P001/ses-S001/eeg/psycopy_only.xdf'
 #fpath = '/home/cathrine/Documents/master/project-thesis/LabRecordings/sub-P001/ses-S001/eeg/kate_psychopy_short_successfull_withiut_ecg.xdf'
-fpath = '/home/cathrine/Documents/master/project-thesis/LabRecordings/sub-P001/ses-S001/eeg/martin_psychopy_short.xdf'
+#fpath = '/home/cathrine/Documents/master/project-thesis/LabRecordings/sub-P001/ses-S001/eeg/martin_psychopy_short.xdf'
+fpath = '/Users/trollexperiment/Documents/cathrine/project-thesis/LabRecordings/sub-P001/ses-S001/eeg/eeg_test1.xdf'
 
-outpath = 'martin_short_output.csv'
+outpath = 'eeg_test1.csv'
 
 streams, fileheader = pyxdf.load_xdf(fpath)
 print("Found {} streams:".format(len(streams)))
@@ -27,7 +28,7 @@ flag_pprint = False
 #streams.pop(4) - pupil capture
 #streams.pop(4) - nirstar triggers
 
-streams.pop(0)
+
 
 # Extract labels and all channel data for each stream. Assuming each channel has label metadata.
 for stream in streams:
